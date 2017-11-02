@@ -3,6 +3,7 @@
             [clojure.test.check.generators :as gen]))
 
 (let [spec (s/int-in 0 10)
-      g (s/gen spec)]
-  (println "clojure.test.check.generators Generator? " (gen/generator? g))
-  (gen/such-that #(s/valid? spec %) g 100))
+      g (s/gen spec)
+      h (gen/->Generator (constantly 1))]
+  (println "clojure.spec.alpha generator's classloader: " (.getClassLoader (type g)))
+  (println "clojure.test.check.generators generator's classloader: " (.getClassLoader (type h))))
